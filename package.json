@@ -1,0 +1,52 @@
+{
+  "name": "img_process_api",
+  "version": "1.0.0",
+  "description": "APi with caching for image processing",
+  "main": "./dist/index.js",
+  "scripts": {
+    "go": "npx tsc && node ./dist/index.js",
+    "build": "npx tsc",
+    "installDep": "npm install typescript --save-dev && npm install ts-node -D && npm install @types/node -D && npm install @types/express -D",
+    "installLint": "npm i eslint --save-dev && npm i prettier -D && npm i eslint-config-prettier -D && npm i eslint-plugin-prettier -D",
+    "installJasmine": "npm i jasmine -D && npm i jasmine-spec-reporter -D && npm  i @types/jasmine -D",
+    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "lint": "eslint ./src/**/*.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hashmi3/Image-Processing-API.git"
+  },
+  "keywords": [
+    "API",
+    "Express",
+    "Jasmine"
+  ],
+  "author": "Hashmi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hashmi3/Image-Processing-API/issues"
+  },
+  "homepage": "https://github.com/hashmi3/Image-Processing-API#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/jasmine": "^3.10.3",
+    "@types/node": "^17.0.10",
+    "@types/sharp": "^0.29.5",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "fs": "^0.0.1-security",
+    "jasmine": "^4.0.2",
+    "jasmine-spec-reporter": "^7.0.0",
+    "prettier": "^2.5.1",
+    "sharp": "^0.29.3",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
