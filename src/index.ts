@@ -12,14 +12,16 @@ const port = 3000;
 const imgList = ["encenadaport.jpg","fjord.jpg", "icelandwaterfall.jpg", "palmtunnel.jpg", "santamonica.jpg" ]
 const imgResized = new Array(imgList.length).fill(0);   //keep track of files resized
 
-type dim =  [width:number, height:number];
+//aatype dim =  [width:number, height:number];
 
 const tally : Map<string, Array<string> > = new Map<string, Array<string>> ();  //list starts with zero
 
-let imgName: string;
-
 app.get('/',(req,res) =>{
   res.send("Reply from Server !");
+} );
+
+app.get('/api',(req,res) =>{
+  res.status(200).send("Reply from Server !");
 } );
 
 async function imageResize (imgPath: string, width : number, height: number, imgNum: number ) {
@@ -40,12 +42,12 @@ async function imageResize (imgPath: string, width : number, height: number, img
   const data = await sharp("./images/"+imgList[imgNum]).resize( width, height, {fit:'inside'} ).toBuffer()
   
   //const writeDone =  await fsPromises.writeFile(outPath+imgList[imgNum], data);
-  const writeDone =  await fsPromises.writeFile(outPath+width.toString()+height.toString()+'_'+imgList[imgNum], data);
+  await fsPromises.writeFile(outPath+width.toString()+height.toString()+'_'+imgList[imgNum], data);
 
 }
 
 app.get('/imgApi', async (req :express.Request,res :express.Response  ) =>{
-  //http://127.0.0.1:3000/imgApi?img=[0-4]&width=[150-]&height[150-]
+  //http://127.0.0.1:3000/imgApi?img=[0-4]&width=[150-]&height=[150-]
   const imgNum = parseInt( req.query.img as string);
   //if new height is missing pick default val
   const outHeight = parseInt(req.query.height as string)? parseInt(req.query.height as string) : 150 ;
@@ -88,3 +90,5 @@ app.listen(port, ()=>{
   console.log(`Server Running at ${port} !`);
 });
 
+
+export default app;

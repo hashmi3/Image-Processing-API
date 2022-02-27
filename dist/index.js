@@ -49,14 +49,17 @@ var app = (0, express_1.default)();
 var port = 3000;
 var imgList = ["encenadaport.jpg", "fjord.jpg", "icelandwaterfall.jpg", "palmtunnel.jpg", "santamonica.jpg"];
 var imgResized = new Array(imgList.length).fill(0); //keep track of files resized
+//aatype dim =  [width:number, height:number];
 var tally = new Map(); //list starts with zero
-var imgName;
 app.get('/', function (req, res) {
     res.send("Reply from Server !");
 });
+app.get('/api', function (req, res) {
+    res.status(200).send("Reply from Server !");
+});
 function imageResize(imgPath, width, height, imgNum) {
     return __awaiter(this, void 0, void 0, function () {
-        var outPath, arrStr, dimVal, data, writeDone;
+        var outPath, arrStr, dimVal, data;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -76,9 +79,11 @@ function imageResize(imgPath, width, height, imgNum) {
                     ];
                 case 1:
                     data = _a.sent();
+                    //const writeDone =  await fsPromises.writeFile(outPath+imgList[imgNum], data);
                     return [4 /*yield*/, fs_1.promises.writeFile(outPath + width.toString() + height.toString() + '_' + imgList[imgNum], data)];
                 case 2:
-                    writeDone = _a.sent();
+                    //const writeDone =  await fsPromises.writeFile(outPath+imgList[imgNum], data);
+                    _a.sent();
                     return [2 /*return*/];
             }
         });
@@ -124,3 +129,4 @@ console.log("Im Here !");
 app.listen(port, function () {
     console.log("Server Running at ".concat(port, " !"));
 });
+exports.default = app;
