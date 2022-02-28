@@ -5,7 +5,7 @@ import path from 'path';
 
 const routes = express.Router();
 
-routes.get('/imgApi', async (req :express.Request,res :express.Response  ) =>{
+routes.get('/', async (req :express.Request,res :express.Response  ) =>{
     //http://127.0.0.1:3000/imgApi?img=[0-4]&width=[150-]&height=[150-]
     // Parse imgNum, outHeight and outWidth from query parameters
     const imgNum = parseInt( req.query.img as string);
@@ -19,12 +19,11 @@ routes.get('/imgApi', async (req :express.Request,res :express.Response  ) =>{
       fs.mkdirSync(outPath, {recursive:true});  
     }
 
-    const imgList = ["encenadaport.jpg","fjord.jpg", "icelandwaterfall.jpg", "palmtunnel.jpg", "santamonica.jpg" ]
-    const imgResized = new Array(imgList.length).fill(0);   //keep track of files resized
+    // getting global variables to keep track of already resized images
+    const imgList = req.app.get('imgList');
+    const imgResized = req.app.get('imgResized');
+    const tally = req.app.get('tally');
 
-
-    const tally : Map<string, Array<string> > = new Map<string, Array<string>> ();  //list starts with zero
-    
     
     console.log("API Starts     !!!\n");
     console.log("req.query.prams(): ",imgNum, outHeight, outWidth );
@@ -35,7 +34,7 @@ routes.get('/imgApi', async (req :express.Request,res :express.Response  ) =>{
         console.log("Sending File from Cache !");
     }else{           
       //resize the file and save on disk and send  
-      console.log('Creating File  !', imgResized);
+      console.log('Creating resized File  !', imgResized);
       
       await util.imageResize("./images/"+imgList[imgNum], outWidth, outHeight, imgNum, imgResized, imgList, tally  );    
     
@@ -50,3 +49,5 @@ routes.get('/imgApi', async (req :express.Request,res :express.Response  ) =>{
     //Logging the picture is processed atleast once  
     imgResized[imgNum] = 1;
   });
+
+  export default routes;

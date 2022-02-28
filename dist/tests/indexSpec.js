@@ -58,6 +58,21 @@ describe("GET / api", function () {
         });
     }); });
 });
+describe("GET / imgApi", function () {
+    it('gets the imgAapi endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, supertest_1.default)(index_1.default).get('/imgApi?img=0&width=250&height=250')];
+                case 1:
+                    res = _a.sent();
+                    console.log(res.body);
+                    expect(res.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
 /*describe('GET /api', () => {
     it(' gets the api endpoint', (done)=>{
         return supertest(app).get('/api').expect(200).then( (response)=> {
