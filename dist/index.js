@@ -40,9 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var sharp_1 = __importDefault(require("sharp"));
-var fs_1 = require("fs");
-var fs_2 = __importDefault(require("fs"));
+var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var buildImage_1 = __importDefault(require("./utilities/buildImage"));
 var app = (0, express_1.default)();
@@ -57,38 +55,6 @@ app.get('/', function (req, res) {
 app.get('/api', function (req, res) {
     res.status(200).send("Reply from Server !");
 });
-function imageResize(imgPath, width, height, imgNum) {
-    return __awaiter(this, void 0, void 0, function () {
-        var outPath, arrStr, dimVal, data;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    outPath = './images/resized/';
-                    arrStr = [];
-                    dimVal = width.toString() + ',' + height.toString();
-                    arrStr.push(dimVal);
-                    // for first time tally.get() returns undefined. doing this to avoid undefined entry in tally arrays [ '700,700', undefined ]
-                    if (imgResized[imgNum] == 0) {
-                        tally.set(imgList[imgNum], arrStr);
-                    }
-                    else {
-                        tally.set(imgList[imgNum], arrStr.concat(tally.get(imgList[imgNum])));
-                    }
-                    return [4 /*yield*/, (0, sharp_1.default)("./images/" + imgList[imgNum]).resize(width, height, { fit: 'inside' }).toBuffer()
-                        //const writeDone =  await fsPromises.writeFile(outPath+imgList[imgNum], data);
-                    ];
-                case 1:
-                    data = _a.sent();
-                    //const writeDone =  await fsPromises.writeFile(outPath+imgList[imgNum], data);
-                    return [4 /*yield*/, fs_1.promises.writeFile(outPath + width.toString() + height.toString() + '_' + imgList[imgNum], data)];
-                case 2:
-                    //const writeDone =  await fsPromises.writeFile(outPath+imgList[imgNum], data);
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
 app.get('/imgApi', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var imgNum, outHeight, outWidth, outPath;
     return __generator(this, function (_a) {
@@ -98,19 +64,19 @@ app.get('/imgApi', function (req, res) { return __awaiter(void 0, void 0, void 0
                 outHeight = parseInt(req.query.height) ? parseInt(req.query.height) : 150;
                 outWidth = parseInt(req.query.width) ? parseInt(req.query.width) : 150;
                 outPath = './images/resized/';
-                if (!fs_2.default.existsSync(outPath)) {
-                    fs_2.default.mkdirSync(outPath, { recursive: true });
+                if (!fs_1.default.existsSync(outPath)) {
+                    fs_1.default.mkdirSync(outPath, { recursive: true });
                 }
                 console.log("API Starts     !!!\n");
                 console.log("req.query.prams(): ", imgNum, outHeight, outWidth);
-                if (!((imgResized[imgNum] == 1) && ((0, buildImage_1.default)(outWidth, outHeight, imgNum, tally, imgList) == 1))) return [3 /*break*/, 1];
+                if (!((imgResized[imgNum] == 1) && (buildImage_1.default.dimProcessedBefore(outWidth, outHeight, imgNum, tally, imgList) == 1))) return [3 /*break*/, 1];
                 res.sendFile(path_1.default.resolve(outPath + outWidth.toString() + outHeight.toString() + '_' + imgList[imgNum]));
                 console.log("Sending File from Cache !");
                 return [3 /*break*/, 3];
             case 1:
                 //resize the file and save on disk and send  
                 console.log('Creating File  !', imgResized);
-                return [4 /*yield*/, imageResize("./images/" + imgList[imgNum], outWidth, outHeight, imgNum)];
+                return [4 /*yield*/, buildImage_1.default.imageResize("./images/" + imgList[imgNum], outWidth, outHeight, imgNum, imgResized, imgList, tally)];
             case 2:
                 _a.sent();
                 //send response from data

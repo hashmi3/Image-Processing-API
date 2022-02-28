@@ -1,4 +1,29 @@
 
+import {promises as fsPromises} from 'fs';
+import sharp from 'sharp';
+
+async function imageResize (imgPath: string, width : number, height: number, imgNum: number, imgResized: Array<number>, imgList: Array<string>, tally: Map<string, Array<string>> ) {
+    
+  const outPath = './images/resized/';
+
+  const arrStr: Array<string> = [];
+  const dimVal = width.toString()+','+height.toString();    //For str '700,500' = 'width,height'
+  arrStr.push(dimVal);
+
+  // for first time tally.get() returns undefined. doing this to avoid undefined entry in tally arrays [ '700,700', undefined ]
+  if(imgResized[imgNum] == 0){
+    tally.set(imgList[imgNum], arrStr );
+  }else{
+    tally.set(imgList[imgNum], arrStr.concat(tally.get(imgList[imgNum]) as Array<string> ) );
+  }  
+
+  const data = await sharp("./images/"+imgList[imgNum]).resize( width, height, {fit:'inside'} ).toBuffer()
+  
+  //const writeDone =  await fsPromises.writeFile(outPath+imgList[imgNum], data);
+  await fsPromises.writeFile(outPath+width.toString()+height.toString()+'_'+imgList[imgNum], data);
+
+}
+
 
 
 function dimProcessedBefore(width: number, height: number, imgNum: number, tally: Map<string, Array<string>>, imgList:Array<string> ){
@@ -21,4 +46,4 @@ function dimProcessedBefore(width: number, height: number, imgNum: number, tally
   return 0;
 }
 
-export default dimProcessedBefore;
+export default {imageResize, dimProcessedBefore};
