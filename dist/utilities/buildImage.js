@@ -73,6 +73,16 @@ function imageResize(imgPath, width, height, imgNum, imgResized, imgList, tally)
         });
     });
 }
+function isValidImgNum(imgNum) {
+    return (imgNum >= 0 && imgNum <= 4) ? 0 : 1; //out of range value for images
+}
+//Max size allowed is 4096 x 2160  (DCI 4K range)
+function isValidWidth(val) {
+    return (val >= 150 && val <= 4096) ? 0 : 1; // min valid width 150, max width 4096  
+}
+function isValidHeight(val) {
+    return (val >= 150 && val <= 2160) ? 0 : 1; // min valid height 150, max height 2160 
+}
 function dimProcessedBefore(width, height, imgNum, tally, imgList) {
     var arr = tally.get(imgList[imgNum]);
     //parse throught arr to find match for width and height
@@ -92,4 +102,4 @@ function dimProcessedBefore(width, height, imgNum, tally, imgList) {
     console.log("Previous dim Processed: ", arr, arr.length);
     return 0;
 }
-exports.default = { imageResize: imageResize, dimProcessedBefore: dimProcessedBefore };
+exports.default = { imageResize: imageResize, dimProcessedBefore: dimProcessedBefore, isValidImgNum: isValidImgNum, isValidWidth: isValidWidth, isValidHeight: isValidHeight };

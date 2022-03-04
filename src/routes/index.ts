@@ -2,18 +2,36 @@ import express from 'express';
 import fs from 'fs';
 import util from '../utilities/buildImage'
 import path from 'path';
+import { callbackify } from 'util';
 
 const routes = express.Router();
 
 routes.get('/', async (req :express.Request,res :express.Response  ) =>{
     //http://127.0.0.1:3000/imgApi?img=[0-4]&width=[150-]&height=[150-]
     // Parse imgNum, outHeight and outWidth from query parameters
-    const imgNum = parseInt( req.query.img as string);
+    const imgNum = parseInt( req.query.img as string) ? parseInt(req.query.img as string) : 0 ;
     //if new height is missing pick default val
     const outHeight = parseInt(req.query.height as string)? parseInt(req.query.height as string) : 150 ;
     //if new height is missing pick default val
     const outWidth = parseInt(req.query.width as string )? parseInt(req.query.width as string) : 150;
     
+
+    if (util.isValidImgNum(imgNum) ){                   //isValidImg returns zero when valid and 1 when invalid
+      console.log("Invalid ImgNum Check !");
+      res.status(422).send("Invalid imgNum Value !");
+      return;
+    }
+    if(util.isValidHeight(outHeight) ){
+      res.status(422).send("Invalid Height Value !");
+      return;
+    }
+    if(util.isValidWidth(outWidth) ){
+      res.status(422).send("Invalid Width Value !");
+      return;
+    }
+      
+
+
     const outPath = './images/resized/';
     if(!fs.existsSync(outPath)){
       fs.mkdirSync(outPath, {recursive:true});  

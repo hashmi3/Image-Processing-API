@@ -24,6 +24,19 @@ async function imageResize (imgPath: string, width : number, height: number, img
 
 }
 
+function isValidImgNum( imgNum: number){
+  return (imgNum >= 0 && imgNum <= 4) ? 0 : 1;  //out of range value for images
+}
+
+//Max size allowed is 4096 x 2160  (DCI 4K range)
+function isValidWidth( val : number){
+  return (val >= 150 && val <= 4096 ) ? 0 : 1;  // min valid width 150, max width 4096  
+}
+
+function isValidHeight(val : number){
+  return (val >= 150 && val <= 2160) ? 0 : 1;   // min valid height 150, max height 2160 
+}
+
 
 
 function dimProcessedBefore(width: number, height: number, imgNum: number, tally: Map<string, Array<string>>, imgList:Array<string> ){
@@ -46,4 +59,4 @@ function dimProcessedBefore(width: number, height: number, imgNum: number, tally
   return 0;
 }
 
-export default {imageResize, dimProcessedBefore};
+export default {imageResize, dimProcessedBefore, isValidImgNum, isValidWidth, isValidHeight};

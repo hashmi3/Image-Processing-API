@@ -4,7 +4,7 @@
   "description": "APi with caching for image processing",
   "main": "./dist/index.js",
   "scripts": {
-    "go": "npx tsc && node ./dist/index.js",
+    "start": "npx tsc && node ./dist/index.js",
     "build": "npx tsc",
     "installDep": "npm install typescript --save-dev && npm install ts-node -D && npm install @types/node -D && npm install @types/express -D",
     "installLint": "npm i eslint --save-dev && npm i prettier -D && npm i eslint-config-prettier -D && npm i eslint-plugin-prettier -D",

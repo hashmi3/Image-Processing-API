@@ -41,24 +41,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
-//const request = supertest(app);
-//const agent = supertest(app);
-describe("GET / api", function () {
-    it('gets the api root endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var res;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, supertest_1.default)(index_1.default).get('/api')];
-                case 1:
-                    res = _a.sent();
-                    console.log(res.body);
-                    expect(res.status).toBe(200);
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-});
-describe("GET / imgApi", function () {
+var buildImage_1 = __importDefault(require("../utilities/buildImage"));
+describe("GET /imgApi", function () {
+    it('expects img = [0-4]', function () {
+        var imgNum = 4;
+        expect(buildImage_1.default.isValidImgNum(imgNum)).toBe(0);
+    });
+    it('expects width tobe <= 4096', function () {
+        var width = 4096;
+        expect(buildImage_1.default.isValidWidth(width)).toBe(0);
+    });
+    it('expects height to be <= 2160 ', function () {
+        var height = 2160;
+        expect(buildImage_1.default.isValidHeight(height)).toBe(0);
+    });
     it('gets the imgAapi endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
         var res;
         return __generator(this, function (_a) {
@@ -73,37 +69,3 @@ describe("GET / imgApi", function () {
         });
     }); });
 });
-/*describe('GET /api', () => {
-    it(' gets the api endpoint', (done)=>{
-        return supertest(app).get('/api').expect(200).then( (response)=> {
-            done();
-        } ).catch(err => done())
-    });
-} );
-*/
-/*describe('Test GET/ endpoint response', () => {
-    
-    const status = 0;
-    const body_val = "";
-    const data = {status,  body_val};
-    beforeAll( (done)=> {
-        request.get("/", (x) => {
-        //request.get("http:localhost:3000/api", (x) => {
-            console.log(x);
-            data.status = x.Response.statusCode;
-            data.body_val = x.body;
-            done();
-        } );
-    });
-
-    it("expect status to be 200",()=>{
-        expect(data.status).toBe(200);
-    } );
-
-    /*it('gets the api endpoint', async (done) => {
-        const response = await request.get('http://localhost:3000/api');
-        expect(response.status).toBe(200);
-        done();
-    } );
-    */
-//} );

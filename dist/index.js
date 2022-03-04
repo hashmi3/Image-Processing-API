@@ -13,12 +13,6 @@ var tally = new Map(); //list starts with zero
 app.set('imgList', imgList); //sharing variables across express routes
 app.set('imgResized', imgResized);
 app.set('tally', tally);
-app.get('/', function (req, res) {
-    res.status(200).send("Reply from Server !");
-});
-app.get('/api', function (req, res) {
-    res.status(200).send("Reply from Server !");
-});
 app.use('/imgApi', index_1.default); //API route for image resizing
 app.listen(port, function () {
     console.log("Server Running at ".concat(port, " !"));

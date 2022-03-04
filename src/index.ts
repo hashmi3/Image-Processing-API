@@ -13,14 +13,6 @@ app.set('imgResized', imgResized );
 app.set('tally', tally);
 
 
-app.get('/',(req,res) =>{
-  res.status(200).send("Reply from Server !");
-} );
-app.get('/api',(req,res) =>{
-  res.status(200).send("Reply from Server !");
-} );
-
-
 app.use('/imgApi', routes);     //API route for image resizing
 
 
