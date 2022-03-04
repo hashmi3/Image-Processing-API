@@ -17,6 +17,7 @@ npm run start
 ## Request Parameters
 Standard GET request: /imgApi?img=[0-4]&width=[150-4096]&height=[150-2160]
 
+Parameter values Limit:<br>
 img = a number less then 5 for picture number selection<br>
 width = a number between 150 to 4096 <br>
 height = a number between 150 to 2160 <br>
