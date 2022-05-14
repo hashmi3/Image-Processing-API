@@ -3,8 +3,10 @@ import supertest from "supertest";
 import app from "../index";
 import util from "../utilities/buildImage";
 
+// Endpoint Testing
 
 describe( "GET /imgApi", ()=> {
+    //test query params  
     it('expects img = [0-4]', ()=> {
       const imgNum = 4;
       expect(util.isValidImgNum(imgNum) ).toBe(0);
@@ -20,6 +22,7 @@ describe( "GET /imgApi", ()=> {
       expect( util.isValidHeight(height) ).toBe(0);
     });
 
+    // Finally test for endpoint
     it('gets the imgAapi endpoint', async ()=>{
       const res = await supertest(app).get('/imgApi?img=0&width=250&height=250');
       console.log(res.body);
