@@ -1,8 +1,10 @@
+import 'dotenv/config';
 import express from 'express';
 import routes from './routes/index';
 
 const app = express();
-const port = 3000;
+//const port = process.env.PORT;      // for Prod
+const port = 3000;                    //for Testing
 
 const imgList = ["encenadaport.jpg","fjord.jpg", "icelandwaterfall.jpg", "palmtunnel.jpg", "santamonica.jpg" ] // list of images
 const imgResized = new Array(imgList.length).fill(0);   //keep track of files resized
