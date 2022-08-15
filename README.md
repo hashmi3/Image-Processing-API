@@ -2,8 +2,8 @@
 
 ## About
 
-Sharp.js based API for image resizing with client request caching feature.<br> 
-Resizing images with sharp.js is 4x-5x faster than using the quickest ImageMagick and GraphicsMagick settings due to its use of [libvips](https://github.com/libvips/libvips).
+API for image resizing with client request caching feature.<br> 
+Image Resizing is performed 4x-5x faster compared with quickest ImageMagick and GraphicsMagick, because of [libvips](https://github.com/libvips/libvips).
 
 #
 ## How  to Run:
